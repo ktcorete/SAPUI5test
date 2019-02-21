@@ -1,0 +1,17 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+	<edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+		<Schema xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm"
+			Namespace="sap.hana.democontent.epm">
+			<EntityType Name="PurchaseOrderHeaderType">
+				<Key><PropertyRef Name="PurchaseOrderId"/></Key><Property Name="PurchaseOrderId" Type="Edm.String" Nullable="false" MaxLength="10"/><Property Name="CreatedByEmployeeId" Type="Edm.String" MaxLength="10"/><Property Name="CreatedByFirstName" Type="Edm.String" MaxLength="40"/><Property Name="CreatedByLastName" Type="Edm.String" MaxLength="40"/><Property Name="CreatedByLoginName" Type="Edm.String" MaxLength="12"/><Property Name="CreatedAt" Type="Edm.DateTime"/><Property Name="PartnerId" Type="Edm.String" MaxLength="10"/><Property Name="CompanyName" Type="Edm.String" MaxLength="80"/><Property Name="Currency" Type="Edm.String" MaxLength="5"/><Property Name="GrossAmount" Type="Edm.Decimal" Precision="15" Scale="2"/><Property Name="NetAmount" Type="Edm.Decimal" Precision="15" Scale="2"/><Property Name="TaxAmount" Type="Edm.Decimal" Precision="15" Scale="2"/><NavigationProperty Name="PurchaseOrderItem" Relationship="sap.hana.democontent.epm.PO_ItemType" FromRole="PurchaseOrderHeaderPrincipal"
+					ToRole="PurchaseOrderItemDependent"/></EntityType>
+			<EntityType Name="PurchaseOrderItemType">
+				<Key><PropertyRef Name="PURCHASEORDERID"/><PropertyRef Name="PURCHASEORDERITEM"/></Key><Property Name="ProductName" Type="Edm.String" MaxLength="1024"/><Property Name="PURCHASEORDERID" Type="Edm.String" Nullable="false" MaxLength="10"/><Property Name="TAXAMOUNT" Type="Edm.Decimal" Precision="15" Scale="2"/><Property Name="PURCHASEORDERITEM" Type="Edm.String" Nullable="false" MaxLength="10"/><Property Name="PRODUCT_PRODUCTID" Type="Edm.String" MaxLength="10"/><Property Name="CURRENCY" Type="Edm.String" MaxLength="5"/><Property Name="GROSSAMOUNT" Type="Edm.Decimal" Precision="15" Scale="2"/><Property Name="NETAMOUNT" Type="Edm.Decimal" Precision="15" Scale="2"/><Property Name="QUANTITY" Type="Edm.Decimal" Precision="13" Scale="3"/><Property Name="QUANTITYUNIT" Type="Edm.String" MaxLength="3"/><Property Name="DELIVERYDATE" Type="Edm.DateTime"/><Property Name="CATEGORY" Type="Edm.String" MaxLength="40"/></EntityType>
+			<Association Name="PO_ItemType"><End Type="sap.hana.democontent.epm.PurchaseOrderHeaderType" Role="PurchaseOrderHeaderPrincipal" Multiplicity="1"/><End Type="sap.hana.democontent.epm.PurchaseOrderItemType" Role="PurchaseOrderItemDependent" Multiplicity="*"/></Association>
+			<EntityContainer Name="poWorklistJoin" m:IsDefaultEntityContainer="true"><EntitySet Name="PurchaseOrderHeader" EntityType="sap.hana.democontent.epm.PurchaseOrderHeaderType"/><EntitySet Name="PurchaseOrderItem" EntityType="sap.hana.democontent.epm.PurchaseOrderItemType"/>
+				<AssociationSet Name="PO_Item" Association="sap.hana.democontent.epm.PO_ItemType"><End Role="PurchaseOrderHeaderPrincipal" EntitySet="PurchaseOrderHeader"/><End Role="PurchaseOrderItemDependent" EntitySet="PurchaseOrderItem"/></AssociationSet>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
